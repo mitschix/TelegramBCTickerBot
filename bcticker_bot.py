@@ -238,7 +238,7 @@ def check_btc_rate_eur(context) -> None:
             # check counter for user if 0; decrease 3 times > 3 hours delay
             if btc_res >= float(high):
                 if counter == 0:
-                    msg = MSG_STATIC['high_reached'] % (curr, btc_res, symbol)
+                    msg = MSG_DYNAMIC['high_reached'] % (curr, btc_res, symbol)
                     context.bot.send_message(chat_id=user, text=msg)
                 db_change(user, "cnt_inc")
             elif btc_res <= float(low):
