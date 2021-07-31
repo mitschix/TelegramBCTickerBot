@@ -6,4 +6,4 @@
 
 **Description**:
 Tiny bot to track bitcoin with borders and different currencies.
-Checkout the result [here](tg://resolve?domain=all_finance_bot) (:
+Checkout the result [here](https://t.me/all_finance_bot). (:
