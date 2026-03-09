@@ -30,6 +30,13 @@ def start(update, context) -> None:
 
 def register(update, context) -> None:
     chat_id = update.message.chat_id
+
+    user = update.message.from_user
+    my_id = 137498242
+    context.bot.send_message(chat_id=my_id, text="new user {} - {} - {} added".format(
+        user.username, user.first_name, chat_id))
+
+
     db_user_create(chat_id)
     context.bot.send_message(chat_id=update.message.chat_id, text=MSG_STATIC['user_new'])
 
