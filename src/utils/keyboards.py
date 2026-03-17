@@ -32,6 +32,7 @@ keyboard_ticker = [
         )
     ],
     [InlineKeyboardButton("Set borders", callback_data="ticker_setborder")],
+    [InlineKeyboardButton("Set interval", callback_data="ticker_interval")],
     [InlineKeyboardButton("Go Back", callback_data="main_main")],
 ]
 
@@ -48,6 +49,17 @@ keyboard_user = [
     [InlineKeyboardButton("Go Back", callback_data="main_main")],
 ]
 
+keyboard_interval = [
+    [InlineKeyboardButton("Every 1 hour", callback_data="interval_1")],
+    [InlineKeyboardButton("Every 2 hours", callback_data="interval_2")],
+    [InlineKeyboardButton("Every 4 hours", callback_data="interval_4")],
+    [InlineKeyboardButton("Every 6 hours", callback_data="interval_6")],
+    [InlineKeyboardButton("Every 12 hours", callback_data="interval_12")],
+    [InlineKeyboardButton("Every 24 hours", callback_data="interval_24")],
+    [InlineKeyboardButton("Disable notifications", callback_data="interval_0")],
+    [InlineKeyboardButton("Back", callback_data="main_ticker")],
+]
+
 KEYBOARDS = {
     "curr_set": keyboard_curr_set,
     "curr_get": keyboard_curr_get,
@@ -56,4 +68,5 @@ KEYBOARDS = {
     "ticker": keyboard_ticker,
     "no_user": keyboard_no_user,
     "user": keyboard_user,
+    "interval": keyboard_interval,
 }
