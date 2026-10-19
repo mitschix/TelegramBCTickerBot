@@ -2,9 +2,14 @@
 import logging
 import os
 
-from db.db_handler import db_create
 from dotenv import load_dotenv
-from handlers import (
+
+# must run before importing handlers/db: they read env vars at import time
+# (ADMIN_ID in handlers/user.py, DB_PATH in db/db_handler.py)
+load_dotenv()
+
+from db.db_handler import db_create  # noqa: E402
+from handlers import (  # noqa: E402
     CURRENT,
     HIGH,
     LOW,
@@ -19,7 +24,7 @@ from handlers import (
     start,
     wrong_conv,
 )
-from telegram.ext import (
+from telegram.ext import (  # noqa: E402
     Application,
     CallbackQueryHandler,
     CommandHandler,
@@ -27,8 +32,6 @@ from telegram.ext import (
     MessageHandler,
     filters,
 )
-
-load_dotenv()
 
 # enable with LOG_LEVEL=INFO or DEBUG; off by default (WARNING)
 logging.basicConfig(

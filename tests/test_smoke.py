@@ -127,6 +127,17 @@ def test_reply_markup_wrapped():
     assert bad == [], f"unwrapped KEYBOARDS used as reply_markup: {bad}"
 
 
+def test_load_dotenv_before_env_reads():
+    """handlers/user.py and db_handler.py read ADMIN_ID/DB_PATH at import time.
+
+    The entrypoint must load .env before importing them, or those vars are
+    silently None for the whole process.
+    """
+    source = (Path(__file__).resolve().parents[1] / "src" / "bot.py").read_text()
+    assert source.index("load_dotenv()") < source.index("from db")
+    assert source.index("load_dotenv()") < source.index("from handlers import")
+
+
 def test_log_token_redaction():
     os.environ["BOT_TOKEN"] = "123456:TEST-TOKEN"
     from bot import TokenFilter
@@ -151,5 +162,6 @@ if __name__ == "__main__":
     test_db_user_flow_roundtrip()
     test_reschedule_user_jobs_on_boot()
     test_reply_markup_wrapped()
+    test_load_dotenv_before_env_reads()
     test_log_token_redaction()
     print("all smoke tests passed")
