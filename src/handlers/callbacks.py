@@ -34,10 +34,11 @@ async def buttons_control(
         return None
 
     if option == "main":
+        # data is the target menu: main/btc/ticker/user (see KEYBOARDS);
         # edit the existing message; update.message is None for callback queries
         await query.edit_message_text(
             MSG_STATIC["main"],
-            reply_markup=InlineKeyboardMarkup(KEYBOARDS["main"]),
+            reply_markup=InlineKeyboardMarkup(KEYBOARDS[data]),
         )
 
     elif option == "user":
