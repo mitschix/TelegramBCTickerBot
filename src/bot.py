@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import logging
 import os
 
 from db.db_handler import db_create
@@ -28,6 +29,13 @@ from telegram.ext import (
 )
 
 load_dotenv()
+
+# enable with LOG_LEVEL=INFO or DEBUG; off by default (WARNING)
+logging.basicConfig(
+    level=os.getenv("LOG_LEVEL", "WARNING"),
+    format="%(asctime)s %(name)s %(levelname)s %(message)s",
+)
+
 TOKEN = os.getenv("BOT_TOKEN")
 if not TOKEN:
     raise RuntimeError("BOT_TOKEN environment variable not set")
