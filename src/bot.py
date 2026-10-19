@@ -41,6 +41,24 @@ if not TOKEN:
     raise RuntimeError("BOT_TOKEN environment variable not set")
 
 
+class TokenFilter(logging.Filter):
+    """Scrub the bot token from log lines (httpx prints full request URLs)."""
+
+    def __init__(self, token: str):
+        super().__init__()
+        self._token = token
+
+    def filter(self, record: logging.LogRecord) -> bool:
+        message = record.getMessage()
+        if self._token in message:
+            record.msg = message.replace(self._token, "***")
+            record.args = None
+        return True
+
+
+logging.getLogger("httpx").addFilter(TokenFilter(TOKEN))
+
+
 async def post_init(app) -> None:
     # jobs live only in memory; recreate them after every restart
     await reschedule_user_jobs(app)

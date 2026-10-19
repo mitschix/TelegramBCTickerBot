@@ -3,6 +3,7 @@
 Runs with pytest, or standalone: python tests/test_smoke.py
 """
 import asyncio
+import logging
 import os
 import sys
 import tempfile
@@ -126,10 +127,29 @@ def test_reply_markup_wrapped():
     assert bad == [], f"unwrapped KEYBOARDS used as reply_markup: {bad}"
 
 
+def test_log_token_redaction():
+    os.environ["BOT_TOKEN"] = "123456:TEST-TOKEN"
+    from bot import TokenFilter
+
+    record = logging.LogRecord(
+        "httpx",
+        logging.INFO,
+        __file__,
+        1,
+        "POST https://api.telegram.org/bot123456:TEST-TOKEN/getUpdates",
+        None,
+        None,
+    )
+    assert TokenFilter("123456:TEST-TOKEN").filter(record) is True
+    assert "123456:TEST-TOKEN" not in record.getMessage()
+    assert "***" in record.getMessage()
+
+
 if __name__ == "__main__":
     test_conversation_constants()
     test_msg_dynamic_templates_format()
     test_db_user_flow_roundtrip()
     test_reschedule_user_jobs_on_boot()
     test_reply_markup_wrapped()
+    test_log_token_redaction()
     print("all smoke tests passed")
