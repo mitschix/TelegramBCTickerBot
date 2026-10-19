@@ -14,6 +14,7 @@ from handlers import (
     help_output,
     main_menu,
     register,
+    reschedule_user_jobs,
     start,
     wrong_conv,
 )
@@ -32,10 +33,15 @@ if not TOKEN:
     raise RuntimeError("BOT_TOKEN environment variable not set")
 
 
+async def post_init(app) -> None:
+    # jobs live only in memory; recreate them after every restart
+    await reschedule_user_jobs(app)
+
+
 def main() -> None:
     db_create()
 
-    app = Application.builder().token(TOKEN).build()
+    app = Application.builder().token(TOKEN).post_init(post_init).build()
 
     conv_handler = ConversationHandler(
         entry_points=[CallbackQueryHandler(buttons_control)],

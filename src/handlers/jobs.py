@@ -1,4 +1,4 @@
-from db.db_handler import db_read_borders, db_read_currency
+from db.db_handler import db_read_borders, db_read_currency, db_read_interval, db_users
 from telegram.ext import ContextTypes
 from utils.btc_query import get_btcrate_currency
 from utils.messages import MSG_DYNAMIC
@@ -25,6 +25,17 @@ async def cancel_user_job(context: ContextTypes.DEFAULT_TYPE, user_id: int):
     jobs = context.job_queue.get_jobs_by_name(f"ticker_{user_id}")
     for job in jobs:
         job.schedule_removal()
+
+
+async def reschedule_user_jobs(context) -> None:
+    """Recreate ticker jobs for all users after a restart (jobs are in-memory).
+
+    Accepts the Application itself; only the job_queue attribute is used.
+    """
+    for user_id in db_users():
+        borders = db_read_borders(user_id)
+        if borders and borders[0] is not None and borders[1] is not None:
+            await schedule_user_job(context, user_id, db_read_interval(user_id))
 
 
 async def check_user_btc(context: ContextTypes.DEFAULT_TYPE):
