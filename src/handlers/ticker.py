@@ -1,5 +1,8 @@
 from typing import Optional
 
+from telegram import InlineKeyboardMarkup, Update
+from telegram.ext import ContextTypes, ConversationHandler
+
 from db.db_handler import (
     db_clear_borders,
     db_read_borders,
@@ -7,12 +10,10 @@ from db.db_handler import (
     db_set_high,
     db_set_low,
 )
-from telegram import InlineKeyboardMarkup, Update
-from telegram.ext import ContextTypes, ConversationHandler
 from utils.keyboards import KEYBOARDS
 from utils.messages import MSG_DYNAMIC, MSG_STATIC
 
-from .conversations import LOW, HIGH
+from .conversations import HIGH, LOW
 from .jobs import cancel_user_job, schedule_user_job
 
 
@@ -68,7 +69,13 @@ async def handle_opt_ticker(
         borders = db_read_borders(user_id)
         if borders and borders[0] is not None and borders[1] is not None:
             low, high = borders
-            msg = MSG_DYNAMIC["borders"] % (low, high)
+            interval = db_read_interval(user_id)
+            interval_text = (
+                MSG_DYNAMIC["interval_set"] % interval
+                if interval
+                else MSG_STATIC["notifs_off"]
+            )
+            msg = f"{interval_text}\n{MSG_DYNAMIC['borders'] % (low, high)}"
         else:
             msg = MSG_STATIC["no_borders"]
 
