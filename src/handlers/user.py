@@ -11,6 +11,8 @@ from telegram.ext import ContextTypes
 from utils.keyboards import KEYBOARDS
 from utils.messages import MSG_DYNAMIC, MSG_STATIC
 
+from .conversations import CURRENT
+
 # optional: bot notifies this chat on new registrations; unset = no notification
 ADMIN_ID = os.getenv("ADMIN_ID")
 
