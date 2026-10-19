@@ -42,9 +42,9 @@ MSG_DYNAMIC = {
     "borders": "Your Borders are:\nLow: %s\nHigh: %s\n--\nWhat do you want to do next?",
     "show_amount": "Your current Bitcoin amount is %s\n--\nWhat do you want to do next?",
     "default_changed": "Default changed to %s!\n--\nWhat do you want to do next?",
-    "high_reached": "HIGH border reached %s %d %s",
-    "low_reached": "LOW border reached %s %d %s",
-    "current": "Current: %s %d %s\n--\nWhat do you want to do next?",
-    "current+amount": "Current: %s %d %s\nYours: %d %s\n--\nWhat do you want to do next?",
+    "high_reached": "HIGH border reached %s %d",
+    "low_reached": "LOW border reached %s %d",
+    "current": "Current: %s %d\n--\nWhat do you want to do next?",
+    "current+amount": "Current: %s %d\nYours: %d\n--\nWhat do you want to do next?",
     "interval_set": "Interval set to every %s hours.",
 }

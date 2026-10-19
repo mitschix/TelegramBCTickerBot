@@ -33,10 +33,10 @@ def test_msg_dynamic_templates_format():
         "borders": (5000.0, 6000.0),
         "show_amount": (0.5,),
         "default_changed": ("EUR",),
-        "high_reached": ("EUR", 60000.5, "€"),
-        "low_reached": ("EUR", 50000.5, "€"),
-        "current": ("EUR", 60000.5, "€"),
-        "current+amount": ("EUR", 60000.5, "€", 0.5, "€"),
+        "high_reached": ("EUR", 60000.5),
+        "low_reached": ("EUR", 50000.5),
+        "current": ("EUR", 60000.5),
+        "current+amount": ("EUR", 60000.5, 0.5),
         "interval_set": (4,),
     }
     assert set(MSG_DYNAMIC) == set(args), "template/args keys out of sync"

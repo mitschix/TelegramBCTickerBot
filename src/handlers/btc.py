@@ -11,14 +11,14 @@ from utils.messages import MSG_DYNAMIC, MSG_STATIC
 
 async def show_btc(curr: str, user_id: int, query) -> None:
     """Show the current btc price for a currency and the user's amount, if set."""
-    btc_res, symbol = await asyncio.to_thread(get_btcrate_currency, curr)
+    btc_res = await asyncio.to_thread(get_btcrate_currency, curr)
     amount = db_read_amount(user_id)
 
     if amount is not None:
         btc_usr = round(btc_res * amount, 2)
-        msg = MSG_DYNAMIC["current+amount"] % (curr, btc_res, symbol, btc_usr, symbol)
+        msg = MSG_DYNAMIC["current+amount"] % (curr, btc_res, btc_usr)
     else:
-        msg = MSG_DYNAMIC["current"] % (curr, btc_res, symbol)
+        msg = MSG_DYNAMIC["current"] % (curr, btc_res)
 
     await query.edit_message_text(
         msg,

@@ -52,12 +52,12 @@ async def check_user_btc(context: ContextTypes.DEFAULT_TYPE):
         return
 
     curr = db_read_currency(user_id)
-    btc_res, symbol = await asyncio.to_thread(get_btcrate_currency, curr)
+    btc_res = await asyncio.to_thread(get_btcrate_currency, curr)
 
     if btc_res >= float(high):
-        msg = MSG_DYNAMIC["high_reached"] % (curr, btc_res, symbol)
+        msg = MSG_DYNAMIC["high_reached"] % (curr, btc_res)
         await context.bot.send_message(chat_id=user_id, text=msg)
 
     elif btc_res <= float(low):
-        msg = MSG_DYNAMIC["low_reached"] % (curr, btc_res, symbol)
+        msg = MSG_DYNAMIC["low_reached"] % (curr, btc_res)
         await context.bot.send_message(chat_id=user_id, text=msg)
