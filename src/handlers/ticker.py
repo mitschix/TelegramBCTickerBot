@@ -91,7 +91,7 @@ async def handle_opt_ticker(
 
     elif data == "interval":
         await query.edit_message_text(
-            "Choose notification interval:",
+            MSG_STATIC["interval_select"],
             reply_markup=InlineKeyboardMarkup(KEYBOARDS["interval"]),
         )
 

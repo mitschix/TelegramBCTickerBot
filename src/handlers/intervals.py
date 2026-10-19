@@ -2,6 +2,7 @@ from db.db_handler import db_set_interval
 from telegram import InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes
 from utils.keyboards import KEYBOARDS
+from utils.messages import MSG_DYNAMIC, MSG_STATIC
 
 from .jobs import cancel_user_job, schedule_user_job
 
@@ -16,7 +17,7 @@ async def handle_opt_interval(
         db_set_interval(user_id, 0)
         await cancel_user_job(context, user_id)
         await query.edit_message_text(
-            "Notifications disabled.",
+            MSG_STATIC["notifs_off"],
             reply_markup=InlineKeyboardMarkup(KEYBOARDS["ticker"]),
         )
         return
@@ -25,6 +26,6 @@ async def handle_opt_interval(
     await schedule_user_job(context, user_id, hours)
 
     await query.edit_message_text(
-        f"Interval set to every {hours} hours.",
+        MSG_DYNAMIC["interval_set"] % hours,
         reply_markup=InlineKeyboardMarkup(KEYBOARDS["ticker"]),
     )

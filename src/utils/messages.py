@@ -32,6 +32,8 @@ MSG_STATIC = {
     "error_number": "sorry.. the given value is wrong! Are you sure it is a number?",
     "error_cmd": "Sorry unrecogniced message :/\n Maybe try /menu",
     "help": HELP_MSG,
+    "interval_select": "Choose notification interval:",
+    "notifs_off": "Notifications disabled.",
 }
 
 MSG_DYNAMIC = {
@@ -45,4 +47,5 @@ MSG_DYNAMIC = {
     "low_reached": "LOW border reached %s %d %s",
     "current": "Current: %s %d %s\n--\nWhat do you want to do next?",
     "current+amount": "Current: %s %d %s\nYours: %d %s\n--\nWhat do you want to do next?",
+    "interval_set": "Interval set to every %s hours.",
 }

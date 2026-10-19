@@ -1,10 +1,10 @@
 from typing import Optional
 
-from db.db_handler import db_user_exist
+from db.db_handler import db_set_currency, db_user_exist
 from telegram import Update
 from telegram.ext import ContextTypes
 from utils.keyboards import KEYBOARDS
-from utils.messages import MSG_STATIC
+from utils.messages import MSG_DYNAMIC, MSG_STATIC
 
 from .btc import handle_opt_btc, handle_opt_getbtc
 from .intervals import handle_opt_interval
@@ -44,11 +44,9 @@ async def buttons_control(
         return await handle_opt_user(update, context, data, user_id)
 
     elif option == "chdef":
-        from db.db_handler import db_set_currency
-
         db_set_currency(user_id, data)
         await query.edit_message_text(
-            f"Default currency changed to {data}.",
+            MSG_DYNAMIC["default_changed"] % data,
             reply_markup=KEYBOARDS["main"],
         )
 

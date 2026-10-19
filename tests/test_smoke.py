@@ -37,6 +37,7 @@ def test_msg_dynamic_templates_format():
         "low_reached": ("EUR", 50000.5, "€"),
         "current": ("EUR", 60000.5, "€"),
         "current+amount": ("EUR", 60000.5, "€", 0.5, "€"),
+        "interval_set": (4,),
     }
     assert set(MSG_DYNAMIC) == set(args), "template/args keys out of sync"
     for key, template in MSG_DYNAMIC.items():
