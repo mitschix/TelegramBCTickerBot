@@ -30,7 +30,6 @@ MSG_STATIC = {
     "ticker_disable": "Ticker disabled - borders unset!\nIf you want to enable it again please set new borders!",
     "error_high": "ERROR! -- HIGH border is lower than LOW border!\n-\nPlease set a new higher border.",
     "error_number": "sorry.. the given value is wrong! Are you sure it is a number?",
-    "error_cmd": "Sorry unrecogniced message :/\n Maybe try /menu",
     "help": HELP_MSG,
     "interval_select": "Choose notification interval:",
     "notifs_off": "Notifications disabled.",

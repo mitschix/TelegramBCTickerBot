@@ -12,11 +12,3 @@ def get_btcrate_currency(curr: str = "EUR") -> Tuple[float, str]:
     all_info = r.json()
     info = all_info[curr]
     return float(info["last"]), info["symbol"]
-
-
-def conv_curr_in_btc(val: float, curr: str = "EUR") -> str:
-    params = {"currency": curr, "value": val}
-    r = requests.get(f"{BLOCKCHAIN_URL}/tobtc", params=params, timeout=10)
-    r.raise_for_status()
-    btc_val = r.text
-    return f"Value for {val} in {curr} is: {btc_val} BTC"
