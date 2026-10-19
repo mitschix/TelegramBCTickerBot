@@ -74,7 +74,8 @@ def db_read_amount(user_id: int) -> Optional[float]:
 
 def db_read_interval(user_id: int) -> int:
     row = run("SELECT interval FROM borders_btc WHERE user=?", user_id, one=True)
-    return int(row[0]) if row and row[0] else 4
+    # 0 is a valid value (notifications off); only NULL falls back to the default
+    return int(row[0]) if row and row[0] is not None else 4
 
 
 def db_set_currency(user_id: int, currency: str) -> None:
