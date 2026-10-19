@@ -1,5 +1,5 @@
 tel_token.py
 telfinbot_kb.sqlite
 src/__pycache__
-src/.env
+.env
 *.pyc
