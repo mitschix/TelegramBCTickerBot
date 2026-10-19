@@ -109,9 +109,27 @@ def test_reschedule_user_jobs_on_boot():
     assert interval == 4 * 3600
 
 
+def test_reply_markup_wrapped():
+    """Raw KEYBOARDS lists are not JSON-serializable on PTB 20+ (crashes at runtime).
+
+    Every reply_markup=KEYBOARDS[...] use must be wrapped in InlineKeyboardMarkup.
+    """
+    import re
+
+    src = Path(__file__).resolve().parents[1] / "src"
+    rule = re.compile(r"reply_markup=KEYBOARDS\[")
+    bad = [
+        str(p.relative_to(src.parent))
+        for p in src.rglob("*.py")
+        if rule.search(p.read_text())
+    ]
+    assert bad == [], f"unwrapped KEYBOARDS used as reply_markup: {bad}"
+
+
 if __name__ == "__main__":
     test_conversation_constants()
     test_msg_dynamic_templates_format()
     test_db_user_flow_roundtrip()
     test_reschedule_user_jobs_on_boot()
+    test_reply_markup_wrapped()
     print("all smoke tests passed")

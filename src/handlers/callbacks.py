@@ -1,7 +1,7 @@
 from typing import Optional
 
 from db.db_handler import db_set_currency, db_user_exist
-from telegram import Update
+from telegram import InlineKeyboardMarkup, Update
 from telegram.ext import ContextTypes
 from utils.keyboards import KEYBOARDS
 from utils.messages import MSG_DYNAMIC, MSG_STATIC
@@ -29,7 +29,7 @@ async def buttons_control(
     if data in user_required and not db_user_exist(user_id):
         await query.edit_message_text(
             MSG_STATIC["register"],
-            reply_markup=KEYBOARDS["no_user"],
+            reply_markup=InlineKeyboardMarkup(KEYBOARDS["no_user"]),
         )
         return None
 
@@ -37,7 +37,7 @@ async def buttons_control(
         # edit the existing message; update.message is None for callback queries
         await query.edit_message_text(
             MSG_STATIC["main"],
-            reply_markup=KEYBOARDS["main"],
+            reply_markup=InlineKeyboardMarkup(KEYBOARDS["main"]),
         )
 
     elif option == "user":
@@ -47,7 +47,7 @@ async def buttons_control(
         db_set_currency(user_id, data)
         await query.edit_message_text(
             MSG_DYNAMIC["default_changed"] % data,
-            reply_markup=KEYBOARDS["main"],
+            reply_markup=InlineKeyboardMarkup(KEYBOARDS["main"]),
         )
 
     elif option == "btc":
