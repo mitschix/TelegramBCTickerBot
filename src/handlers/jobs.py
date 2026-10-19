@@ -1,3 +1,5 @@
+import asyncio
+
 from db.db_handler import db_read_borders, db_read_currency, db_read_interval, db_users
 from telegram.ext import ContextTypes
 from utils.btc_query import get_btcrate_currency
@@ -50,7 +52,7 @@ async def check_user_btc(context: ContextTypes.DEFAULT_TYPE):
         return
 
     curr = db_read_currency(user_id)
-    btc_res, symbol = get_btcrate_currency(curr)
+    btc_res, symbol = await asyncio.to_thread(get_btcrate_currency, curr)
 
     if btc_res >= float(high):
         msg = MSG_DYNAMIC["high_reached"] % (curr, btc_res, symbol)

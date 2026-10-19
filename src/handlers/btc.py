@@ -1,3 +1,4 @@
+import asyncio
 from typing import Optional
 
 from db.db_handler import db_read_amount, db_read_currency
@@ -21,7 +22,7 @@ async def handle_opt_btc(
 
     elif data == "getbtcdef":
         curr = db_read_currency(user_id)
-        btc_res, symbol = get_btcrate_currency(curr)
+        btc_res, symbol = await asyncio.to_thread(get_btcrate_currency, curr)
         amount = db_read_amount(user_id)
 
         if amount is not None:
@@ -48,7 +49,7 @@ async def handle_opt_getbtc(
     query = update.callback_query
     curr = data
 
-    btc_res, symbol = get_btcrate_currency(curr)
+    btc_res, symbol = await asyncio.to_thread(get_btcrate_currency, curr)
     amount = db_read_amount(user_id)
 
     if amount is not None:
